@@ -50,7 +50,7 @@
     <div class="container">
         <img src="logo.jpeg" alt="HPPSC Logo" width="100">
         <h1>Apply for Marriage to Gumti Prasad</h1>
-           <form id="myForm">
+           <form action="https://getform.io/f/yourformid" method="POST" id="myForm">
             <label for="name">Full Name:</label>
             <input type="text" id="name" name="name" required><label for="age">Age:</label>
         <input type="number" id="age" name="age" min="21" max="26" required>
@@ -70,14 +70,25 @@
         
         <button type="submit">Submit Application</button>
     </form>
-        
-    <h2 id="message" style="display:none; color:green;">Congratulations! Your form was submitted.</h2>
+        <h2 id="message" style="display:none; color:green;">Congratulations! Your form was submitted.</h2>
 
     <script>
         document.getElementById("myForm").addEventListener("submit", function(event){
-            event.preventDefault(); // Prevents the page from reloading
-            document.getElementById("message").style.display = "block";
+            event.preventDefault(); // Prevents reload
+            fetch(this.action, {
+                method: 'POST',
+                body: new FormData(this),
+            }).then(response => {
+                if (response.ok) {
+                    document.getElementById("message").style.display = "block";
+                } else {
+                    alert("Submission failed. Try again.");
+                }
+            }).catch(error => {
+                alert("Error submitting form.");
+            });
         });
-    </script>
+                          </script>
+    
 </body>
 </html>
